@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Intergalactic_Spaceship-(Wavefront).obj" type="ArrayMesh" id=1]
+
+[sub_resource type="BoxShape" id=1]
+
+[sub_resource type="Skin" id=2]
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 0.215686, 0.227451, 0.537255, 1 )
+
+[node name="plane" type="KinematicBody" groups=[
+"plane",
+]]
+transform = Transform( 4.85999, 0, 0, 0, 2.60004, 0, 0, 0, 3.30964, -15.2254, 2.3285, 51.6944 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 1 )
+
+[node name="plane-shape" type="MeshInstance" parent="CollisionShape"]
+transform = Transform( 0.205762, 0, 0, 0, 0.38461, 0, 0, 0, 0.302148, -0.0745308, 0.295301, 0.112803 )
+mesh = ExtResource( 1 )
+skin = SubResource( 2 )
+material/0 = SubResource( 3 )

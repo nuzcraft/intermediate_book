@@ -1,0 +1,159 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://player.tscn" type="PackedScene" id=1]
+
+[sub_resource type="BoxShape" id=1]
+
+[sub_resource type="SpatialMaterial" id=2]
+albedo_color = Color( 0.101961, 0.45098, 0.682353, 1 )
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 0.905882, 0.0666667, 0.0666667, 1 )
+
+[node name="Spatial" type="Spatial"]
+
+[node name="ground" type="StaticBody" parent="." groups=[
+"ground",
+]]
+transform = Transform( 100, 0, 0, 0, 1, 0, 0, 0, 100, 0, 0, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="ground"]
+shape = SubResource( 1 )
+
+[node name="CSGBox" type="CSGBox" parent="ground/CollisionShape"]
+material = SubResource( 2 )
+
+[node name="box_to_collect" type="StaticBody" parent="." groups=[
+"pick_me",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -3.58976 )
+
+[node name="CollisionShape" type="CollisionShape" parent="box_to_collect"]
+shape = SubResource( 1 )
+
+[node name="CSGBox" type="CSGBox" parent="box_to_collect/CollisionShape"]
+material = SubResource( 3 )
+
+[node name="box_to_collect2" type="StaticBody" parent="." groups=[
+"pick_me",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -11 )
+
+[node name="CollisionShape" type="CollisionShape" parent="box_to_collect2"]
+shape = SubResource( 1 )
+
+[node name="CSGBox" type="CSGBox" parent="box_to_collect2/CollisionShape"]
+material = SubResource( 3 )
+
+[node name="box_to_collect3" type="StaticBody" parent="." groups=[
+"pick_me",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0206242, 2, 10.0336 )
+
+[node name="CollisionShape" type="CollisionShape" parent="box_to_collect3"]
+shape = SubResource( 1 )
+
+[node name="CSGBox" type="CSGBox" parent="box_to_collect3/CollisionShape"]
+material = SubResource( 3 )
+
+[node name="box_to_collect4" type="StaticBody" parent="." groups=[
+"pick_me",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 3 )
+
+[node name="CollisionShape" type="CollisionShape" parent="box_to_collect4"]
+shape = SubResource( 1 )
+
+[node name="CSGBox" type="CSGBox" parent="box_to_collect4/CollisionShape"]
+material = SubResource( 3 )
+
+[node name="box_to_collect5" type="StaticBody" parent="." groups=[
+"pick_me",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.15429, 2, -3.58976 )
+
+[node name="CollisionShape" type="CollisionShape" parent="box_to_collect5"]
+shape = SubResource( 1 )
+
+[node name="CSGBox" type="CSGBox" parent="box_to_collect5/CollisionShape"]
+material = SubResource( 3 )
+
+[node name="box_to_collect6" type="StaticBody" parent="." groups=[
+"pick_me",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.15429, 2, -11 )
+
+[node name="CollisionShape" type="CollisionShape" parent="box_to_collect6"]
+shape = SubResource( 1 )
+
+[node name="CSGBox" type="CSGBox" parent="box_to_collect6/CollisionShape"]
+material = SubResource( 3 )
+
+[node name="box_to_collect7" type="StaticBody" parent="." groups=[
+"pick_me",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.17491, 2, 10.0336 )
+
+[node name="CollisionShape" type="CollisionShape" parent="box_to_collect7"]
+shape = SubResource( 1 )
+
+[node name="CSGBox" type="CSGBox" parent="box_to_collect7/CollisionShape"]
+material = SubResource( 3 )
+
+[node name="box_to_collect8" type="StaticBody" parent="." groups=[
+"pick_me",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.15429, 2, 3 )
+
+[node name="CollisionShape" type="CollisionShape" parent="box_to_collect8"]
+shape = SubResource( 1 )
+
+[node name="CSGBox" type="CSGBox" parent="box_to_collect8/CollisionShape"]
+material = SubResource( 3 )
+
+[node name="box_to_collect9" type="StaticBody" parent="." groups=[
+"pick_me",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 19.9766, 2, -3.58976 )
+
+[node name="CollisionShape" type="CollisionShape" parent="box_to_collect9"]
+shape = SubResource( 1 )
+
+[node name="CSGBox" type="CSGBox" parent="box_to_collect9/CollisionShape"]
+material = SubResource( 3 )
+
+[node name="box_to_collect10" type="StaticBody" parent="." groups=[
+"pick_me",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 19.9766, 2, -11 )
+
+[node name="CollisionShape" type="CollisionShape" parent="box_to_collect10"]
+shape = SubResource( 1 )
+
+[node name="CSGBox" type="CSGBox" parent="box_to_collect10/CollisionShape"]
+material = SubResource( 3 )
+
+[node name="box_to_collect11" type="StaticBody" parent="." groups=[
+"pick_me",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 19.9972, 2, 10.0336 )
+
+[node name="CollisionShape" type="CollisionShape" parent="box_to_collect11"]
+shape = SubResource( 1 )
+
+[node name="CSGBox" type="CSGBox" parent="box_to_collect11/CollisionShape"]
+material = SubResource( 3 )
+
+[node name="box_to_collect12" type="StaticBody" parent="." groups=[
+"pick_me",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 19.9766, 2, 3 )
+
+[node name="CollisionShape" type="CollisionShape" parent="box_to_collect12"]
+shape = SubResource( 1 )
+
+[node name="CSGBox" type="CSGBox" parent="box_to_collect12/CollisionShape"]
+material = SubResource( 3 )
+
+[node name="player" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 1, 2 )
