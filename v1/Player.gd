@@ -69,5 +69,9 @@ func _input(event):
 	#print("Test")
 	if event is InputEventMouseMotion	:
 		mouseDelta = event.relative
-	if event.is_action("exit_game"):
-		get_tree().quit()
+	if event.is_action_pressed("exit_game"):
+#		get_tree().quit()
+		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		else:
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
