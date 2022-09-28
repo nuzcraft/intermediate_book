@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://texture_05.png" type="Texture" id=2]
+[ext_resource path="res://BebasNeue-Regular.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://launcher.tscn" type="PackedScene" id=4]
 
 [sub_resource type="BoxShape" id=1]
@@ -9,6 +10,10 @@
 [sub_resource type="SpatialMaterial" id=2]
 albedo_texture = ExtResource( 2 )
 uv1_scale = Vector3( 10, 10, 10 )
+
+[sub_resource type="DynamicFont" id=8]
+size = 100
+font_data = ExtResource( 3 )
 
 [sub_resource type="SphereShape" id=3]
 
@@ -35,7 +40,15 @@ shape = SubResource( 1 )
 material = SubResource( 2 )
 
 [node name="player" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.07205, 0 )
+transform = Transform( -0.477603, 0, 0.878576, 0, 1, 0, -0.878576, 0, -0.477603, 0, 2.07205, 0 )
+
+[node name="message" type="Label" parent="player"]
+margin_right = 500.0
+margin_bottom = 100.0
+custom_fonts/font = SubResource( 8 )
+text = "Congratulations :)"
+align = 1
+valign = 1
 
 [node name="launcher" parent="." instance=ExtResource( 4 )]
 
@@ -93,8 +106,6 @@ shape = SubResource( 5 )
 
 [node name="CSGCylinder" type="CSGCylinder" parent="end/CollisionShape"]
 material = SubResource( 7 )
-
-[node name="CSGBox" type="CSGBox" parent="."]
 
 [node name="launcher2" parent="." instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 7, 35.7302 )

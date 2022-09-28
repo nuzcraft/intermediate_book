@@ -17,9 +17,11 @@ var score = 0
 
 
 onready var camera :Camera = get_node("Camera")#only when node is initialized
+onready var user_message:Label = get_node("message")
 
 func _ready():
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	user_message.set_text("")
 	
 func _physics_process(delta):#called 60 times per sec
 	velocity.x = 0
@@ -56,6 +58,9 @@ func _physics_process(delta):#called 60 times per sec
 			score += 1
 			print ("score " + str(score))
 			collision.collider.queue_free()
+		elif (collision.collider.name == "end" && score == 4):
+			print("Congratulations!")
+			user_message.set_text("CONGRATULATIONS")
 
 	
 func _process(delta):#not physics related
