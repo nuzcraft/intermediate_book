@@ -18,10 +18,13 @@ var score = 0
 
 onready var camera :Camera = get_node("Camera")#only when node is initialized
 onready var user_message:Label = get_node("message")
+onready var message_timer:Timer = get_node("messageTimer")
+onready var score_label:Label = get_node("score")
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	user_message.set_text("")
+	score_label.set_text(str(score))
 	
 func _physics_process(delta):#called 60 times per sec
 	velocity.x = 0
@@ -54,13 +57,17 @@ func _physics_process(delta):#called 60 times per sec
 	for index in get_slide_count():	
 		var collision = get_slide_collision(index)	
 		if (collision.collider.is_in_group("collect")):
+			user_message.set_text("You have collected an object")
+			message_timer.start()
 			print("Collision with " + collision.collider.name)
 			score += 1
 			print ("score " + str(score))
 			collision.collider.queue_free()
+			score_label.set_text(str(score))
 		elif (collision.collider.name == "end" && score == 4):
 			print("Congratulations!")
 			user_message.set_text("CONGRATULATIONS")
+			message_timer.start()
 
 	
 func _process(delta):#not physics related
@@ -82,3 +89,7 @@ func _input(event):
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		else:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+
+func _on_messageTimer_timeout():
+	user_message.set_text("")
