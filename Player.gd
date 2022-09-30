@@ -14,7 +14,7 @@ var velocity:Vector3 = Vector3()
 var mouseDelta: Vector2 = Vector2()
 #var scoreUI:RichTextLabel
 var score = 0
-var gun_ammo = 3
+var gun_ammo = 10
 
 
 onready var camera :Camera = get_node("Camera")#only when node is initialized
@@ -52,6 +52,8 @@ func _physics_process(delta):#called 60 times per sec
 			var obj = ray.get_collider()
 			print("the object " + obj.get_name() + " is in front of the player")
 			print("you have " + str(gun_ammo) + " ammunition left")
+			if obj.is_in_group("target"):
+				obj.got_hit()
 	
 	var forward = global_transform.basis.z;
 	var right = global_transform.basis.x;
