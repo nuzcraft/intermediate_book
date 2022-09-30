@@ -1,0 +1,96 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://BebasNeue-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://texture_05.png" type="Texture" id=3]
+
+[sub_resource type="BoxShape" id=1]
+
+[sub_resource type="SpatialMaterial" id=2]
+albedo_texture = ExtResource( 3 )
+uv1_scale = Vector3( 10, 10, 10 )
+
+[sub_resource type="DynamicFont" id=8]
+size = 100
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=9]
+size = 100
+font_data = ExtResource( 1 )
+
+[sub_resource type="BoxShape" id=10]
+
+[sub_resource type="SpatialMaterial" id=11]
+albedo_color = Color( 0.901961, 0.454902, 0.454902, 1 )
+
+[node name="Spatial" type="Spatial"]
+
+[node name="ground" type="StaticBody" parent="."]
+transform = Transform( 100, 0, 0, 0, 1, 0, 0, 0, 100, 0, 0, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="ground"]
+shape = SubResource( 1 )
+
+[node name="CSGBox" type="CSGBox" parent="ground/CollisionShape"]
+material = SubResource( 2 )
+
+[node name="player" parent="." instance=ExtResource( 2 )]
+transform = Transform( -0.477603, 0, 0.878576, 0, 1, 0, -0.878576, 0, -0.477603, 0, 2.07205, 0 )
+
+[node name="message" type="Label" parent="."]
+margin_right = 628.0
+margin_bottom = 120.0
+custom_fonts/font = SubResource( 8 )
+text = "Congratulations :)"
+align = 1
+valign = 1
+
+[node name="messageTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="scoreLabel" type="Label" parent="."]
+margin_left = 981.0
+margin_right = 1021.0
+margin_bottom = 120.0
+grow_horizontal = 0
+custom_fonts/font = SubResource( 9 )
+align = 2
+
+[node name="target1" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 5, 0, 0, 0, 1, 0, 5, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="target1"]
+shape = SubResource( 10 )
+
+[node name="CSGBox" type="CSGBox" parent="target1/CollisionShape"]
+material = SubResource( 11 )
+
+[node name="target2" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 5, 0, 0, 0, 1, 6, 5, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="target2"]
+shape = SubResource( 10 )
+
+[node name="CSGBox" type="CSGBox" parent="target2/CollisionShape"]
+material = SubResource( 11 )
+
+[node name="target3" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 5, 0, 0, 0, 1, 12, 5, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="target3"]
+shape = SubResource( 10 )
+
+[node name="CSGBox" type="CSGBox" parent="target3/CollisionShape"]
+material = SubResource( 11 )
+
+[node name="target4" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 5, 0, 0, 0, 1, 18, 5, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="target4"]
+shape = SubResource( 10 )
+
+[node name="CSGBox" type="CSGBox" parent="target4/CollisionShape"]
+material = SubResource( 11 )
+
+[connection signal="timeout" from="messageTimer" to="player" method="_on_messageTimer_timeout"]

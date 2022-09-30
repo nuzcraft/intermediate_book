@@ -17,14 +17,19 @@ var score = 0
 
 
 onready var camera :Camera = get_node("Camera")#only when node is initialized
-onready var user_message:Label = get_node("message")
-onready var message_timer:Timer = get_node("messageTimer")
-onready var score_label:Label = get_node("score")
+onready var user_message:Label = get_node("../message")
+onready var message_timer:Timer = get_node("../messageTimer")
+onready var score_label:Label = get_node("../scoreLabel")
+var ray:RayCast
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	user_message.set_text("")
 	score_label.set_text(str(score))
+	ray = RayCast.new()
+	ray.enabled = true
+	camera.add_child(ray)
+	ray.cast_to = Vector3(0, 0, -100)
 	
 func _physics_process(delta):#called 60 times per sec
 	velocity.x = 0
@@ -39,6 +44,11 @@ func _physics_process(delta):#called 60 times per sec
 	if Input.is_action_pressed("move_right"):
 		input.x-=1		
 	input.normalized();
+	
+	if Input.is_action_just_pressed("fire"):
+		if ray.is_colliding():
+			var obj = ray.get_collider()
+			print("the object " + obj.get_name() + " is in front of the player")
 	
 	var forward = global_transform.basis.z;
 	var right = global_transform.basis.x;
