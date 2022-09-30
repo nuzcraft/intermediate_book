@@ -1,8 +1,10 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://BebasNeue-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://texture_05.png" type="Texture" id=3]
+[ext_resource path="res://crossHair.png" type="Texture" id=4]
+[ext_resource path="res://training_camp/crosshair.gd" type="Script" id=5]
 
 [sub_resource type="BoxShape" id=1]
 
@@ -41,7 +43,6 @@ transform = Transform( -0.477603, 0, 0.878576, 0, 1, 0, -0.878576, 0, -0.477603,
 margin_right = 628.0
 margin_bottom = 120.0
 custom_fonts/font = SubResource( 8 )
-text = "Congratulations :)"
 align = 1
 valign = 1
 
@@ -92,5 +93,13 @@ shape = SubResource( 10 )
 
 [node name="CSGBox" type="CSGBox" parent="target4/CollisionShape"]
 material = SubResource( 11 )
+
+[node name="crosshair" type="TextureRect" parent="."]
+margin_left = 356.0
+margin_top = 144.0
+margin_right = 668.0
+margin_bottom = 456.0
+texture = ExtResource( 4 )
+script = ExtResource( 5 )
 
 [connection signal="timeout" from="messageTimer" to="player" method="_on_messageTimer_timeout"]
