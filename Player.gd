@@ -83,6 +83,11 @@ func _physics_process(delta):#called 60 times per sec
 			print("Congratulations!")
 			user_message.set_text("CONGRATULATIONS")
 			message_timer.start()
+		elif (collision.collider.is_in_group("ammo_gun")):
+			gun_ammo += 5
+			if (gun_ammo > 10):
+				gun_ammo = 10
+			collision.collider.queue_free()
 
 	
 func _process(delta):#not physics related
