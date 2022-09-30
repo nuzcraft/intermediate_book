@@ -23,6 +23,10 @@ onready var message_timer:Timer = get_node("../messageTimer")
 onready var score_label:Label = get_node("../scoreLabel")
 var ray:RayCast
 
+var inventory: WeaponInventory
+var reload_timer: Timer
+var can_shoot = true
+
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	user_message.set_text("")
@@ -31,6 +35,11 @@ func _ready():
 	ray.enabled = true
 	camera.add_child(ray)
 	ray.cast_to = Vector3(0, 0, -100)
+	reload_timer = Timer.new()
+	add_child(reload_timer)
+	reload_timer.connect("timout", self, "reload_timer_timeout")
+	inventory = WeaponInventory.new()
+	
 	
 func _physics_process(delta):#called 60 times per sec
 	velocity.x = 0
@@ -88,6 +97,13 @@ func _physics_process(delta):#called 60 times per sec
 			if (gun_ammo > 10):
 				gun_ammo = 10
 			collision.collider.queue_free()
+			
+	if Input.is_action_just_pressed("change weapon"):
+		inventory.change_weapon()
+		var message = inventory.get_curr_weapon_name()
+		message += "(" + str(inventory.get_curr_weapon_ammo()) + ")"
+		print(message)
+		reload_timer.wait_time=inventory.get_curr_reload_time()
 
 	
 func _process(delta):#not physics related

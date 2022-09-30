@@ -8,6 +8,22 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Reference",
+"class": "Weapon",
+"language": "GDScript",
+"path": "res://Weapon.gd"
+}, {
+"base": "Reference",
+"class": "WeaponInventory",
+"language": "GDScript",
+"path": "res://WeaponInventory.gd"
+} ]
+_global_script_class_icons={
+"Weapon": "",
+"WeaponInventory": ""
+}
+
 [application]
 
 config/name="Startup Project"
@@ -53,6 +69,11 @@ exit_game={
 fire={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":70,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+"change weapon"={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777218,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
 
