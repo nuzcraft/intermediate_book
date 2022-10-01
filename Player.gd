@@ -21,6 +21,7 @@ onready var camera :Camera = get_node("Camera")#only when node is initialized
 onready var user_message:Label = get_node("../message")
 onready var message_timer:Timer = get_node("../messageTimer")
 onready var score_label:Label = get_node("../scoreLabel")
+onready var sound_fx := $sound_fx
 var ray:RayCast
 
 var inventory: WeaponInventory
@@ -37,7 +38,7 @@ func _ready():
 	ray.cast_to = Vector3(0, 0, -100)
 	reload_timer = Timer.new()
 	add_child(reload_timer)
-	reload_timer.connect("timout", self, "reload_timer_timeout")
+	reload_timer.connect("timeout", self, "reload_timer_timeout")
 	inventory = WeaponInventory.new()
 	
 	
@@ -55,14 +56,21 @@ func _physics_process(delta):#called 60 times per sec
 		input.x-=1		
 	input.normalized();
 	
-	if Input.is_action_just_pressed("fire") and gun_ammo > 0:
-		if ray.is_colliding():
-			gun_ammo -= 1
-			var obj = ray.get_collider()
-			print("the object " + obj.get_name() + " is in front of the player")
-			print("you have " + str(gun_ammo) + " ammunition left")
-			if obj.is_in_group("target"):
-				obj.got_hit()
+	if Input.is_action_pressed("fire"):
+		var condition1 = inventory.weapon_index == Weapon.TYPE_GUN
+		var condition2 = inventory.weapon_index == Weapon.TYPE_AUTO_GUN
+		var condition3 = inventory.has_ammo_for_current()
+		var condition4 = can_shoot
+		if (condition1 or condition2) and condition3 and condition4:
+			inventory.decrease_curr_ammo()
+			can_shoot = false
+			reload_timer.wait_time = inventory.get_curr_reload_time()
+			reload_timer.start()
+			sound_fx.play()
+			if ray.is_colliding():
+				var obj = ray.get_collider()
+				if obj.is_in_group("target"):
+					obj.got_hit()
 	
 	var forward = global_transform.basis.z;
 	var right = global_transform.basis.x;
@@ -103,6 +111,8 @@ func _physics_process(delta):#called 60 times per sec
 		var message = inventory.get_curr_weapon_name()
 		message += "(" + str(inventory.get_curr_weapon_ammo()) + ")"
 		print(message)
+		user_message.set_text(message)
+		message_timer.start()
 		reload_timer.wait_time=inventory.get_curr_reload_time()
 
 	
@@ -129,3 +139,7 @@ func _input(event):
 
 func _on_messageTimer_timeout():
 	user_message.set_text("")
+	
+func reload_timer_timeout():
+	can_shoot = true
+	reload_timer.stop()

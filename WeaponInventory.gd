@@ -16,7 +16,7 @@ func change_weapon():
 		weapon_index = 0
 		
 func has_ammo_for_current():
-	return weapons[weapon_index].ammos > 0
+	return weapons[weapon_index].ammo > 0
 	
 func decrease_curr_ammo(amount: int = 1):
 	weapons[weapon_index].decrease_ammo(amount)

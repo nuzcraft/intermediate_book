@@ -9,7 +9,7 @@ func _ready():
 
 func got_hit():
 	health -= 20
-	print("Health: " + str(health))
+#	print("Health: " + str(health))
 	if health <= 0:
 		destroy_target()
 		

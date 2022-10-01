@@ -4,7 +4,7 @@ const TYPE_GUN: int = 0
 const TYPE_AUTO_GUN: int = 1
 const TYPE_GRENADE: int = 2
 
-var reload_time: int
+var reload_time: float
 var name: String
 var ammo : int
 var max_ammo : int
