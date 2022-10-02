@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://BebasNeue-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://player.tscn" type="PackedScene" id=2]
@@ -6,17 +6,16 @@
 [ext_resource path="res://crossHair.png" type="Texture" id=4]
 [ext_resource path="res://training_camp/crosshair.gd" type="Script" id=5]
 [ext_resource path="res://training_camp/ManageNPC.gd" type="Script" id=6]
-[ext_resource path="res://box_texture.jpg" type="Texture" id=7]
+[ext_resource path="res://ammo_gun.tscn" type="PackedScene" id=7]
+[ext_resource path="res://ammo_auto.tscn" type="PackedScene" id=8]
 [ext_resource path="res://white.png" type="Texture" id=9]
+[ext_resource path="res://ammo_grenade.tscn" type="PackedScene" id=10]
 
 [sub_resource type="BoxShape" id=1]
 
 [sub_resource type="SpatialMaterial" id=24]
 albedo_texture = ExtResource( 3 )
 uv1_scale = Vector3( 10, 10, 1 )
-
-[sub_resource type="SpatialMaterial" id=25]
-albedo_texture = ExtResource( 7 )
 
 [sub_resource type="DynamicFont" id=8]
 size = 100
@@ -74,14 +73,11 @@ shape = SubResource( 1 )
 [node name="CSGBox" type="CSGBox" parent="ground/CollisionShape"]
 material = SubResource( 24 )
 
-[node name="ammo" type="StaticBody" parent="." groups=["ammo_gun"]]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 2, 4 )
+[node name="ammo_gun" parent="." instance=ExtResource( 7 )]
 
-[node name="CollisionShape" type="CollisionShape" parent="ammo"]
-shape = SubResource( 1 )
+[node name="ammo_auto" parent="." instance=ExtResource( 8 )]
 
-[node name="CSGBox" type="CSGBox" parent="ammo/CollisionShape"]
-material = SubResource( 25 )
+[node name="ammo_grenade" parent="." instance=ExtResource( 10 )]
 
 [node name="player" parent="." instance=ExtResource( 2 )]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 2.07205, 13 )

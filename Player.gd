@@ -40,6 +40,7 @@ func _ready():
 	add_child(reload_timer)
 	reload_timer.connect("timeout", self, "reload_timer_timeout")
 	inventory = WeaponInventory.new()
+	update_UI()
 	
 	
 func _physics_process(delta):#called 60 times per sec
@@ -63,6 +64,7 @@ func _physics_process(delta):#called 60 times per sec
 		var condition4 = can_shoot
 		if (condition1 or condition2) and condition3 and condition4:
 			inventory.decrease_curr_ammo()
+			update_UI()
 			can_shoot = false
 			reload_timer.wait_time = inventory.get_curr_reload_time()
 			reload_timer.start()
@@ -100,19 +102,22 @@ func _physics_process(delta):#called 60 times per sec
 			print("Congratulations!")
 			user_message.set_text("CONGRATULATIONS")
 			message_timer.start()
-		elif (collision.collider.is_in_group("ammo_gun")):
-			gun_ammo += 5
-			if (gun_ammo > 10):
-				gun_ammo = 10
+		elif collision.collider.is_in_group("ammo_gun"):
+			inventory.weapons[Weapon.TYPE_GUN].increase_ammo(10)
 			collision.collider.queue_free()
+			update_UI()
+		elif collision.collider.is_in_group("auto_ammo_gun"):
+			inventory.weapons[Weapon.TYPE_AUTO_GUN].increase_ammo(10)
+			collision.collider.queue_free()
+			update_UI()
+		elif collision.collider.is_in_group("ammo_grenade"):
+			inventory.weapons[Weapon.TYPE_GRENADE].increase_ammo(10)
+			collision.collider.queue_free()
+			update_UI()
 			
 	if Input.is_action_just_pressed("change weapon"):
 		inventory.change_weapon()
-		var message = inventory.get_curr_weapon_name()
-		message += "(" + str(inventory.get_curr_weapon_ammo()) + ")"
-		print(message)
-		user_message.set_text(message)
-		message_timer.start()
+		update_UI()
 		reload_timer.wait_time=inventory.get_curr_reload_time()
 
 	
@@ -143,3 +148,8 @@ func _on_messageTimer_timeout():
 func reload_timer_timeout():
 	can_shoot = true
 	reload_timer.stop()
+	
+func update_UI():
+	var message = inventory.get_curr_weapon_name()
+	message += "(" + str(inventory.get_curr_weapon_ammo()) + ")"
+	user_message.set_text(message)
