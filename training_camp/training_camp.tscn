@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://BebasNeue-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://player.tscn" type="PackedScene" id=2]
@@ -12,6 +12,9 @@
 [ext_resource path="res://ammo_grenade.tscn" type="PackedScene" id=10]
 [ext_resource path="res://grenade.tscn" type="PackedScene" id=11]
 [ext_resource path="res://joepli_shaded.gdshader" type="Shader" id=12]
+[ext_resource path="res://gunshot.wav" type="AudioStream" id=13]
+[ext_resource path="res://grenade_launch.wav" type="AudioStream" id=14]
+[ext_resource path="res://powerup.wav" type="AudioStream" id=15]
 
 [sub_resource type="BoxShape" id=1]
 
@@ -100,6 +103,9 @@ material = SubResource( 24 )
 [node name="player" parent="." instance=ExtResource( 2 )]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 2.07205, 13 )
 grenade = ExtResource( 11 )
+sound_grenade_launch = ExtResource( 14 )
+sound_gun = ExtResource( 13 )
+sound_ammo_collect = ExtResource( 15 )
 
 [node name="message" type="Label" parent="."]
 margin_left = 31.0
@@ -111,7 +117,7 @@ align = 1
 valign = 1
 
 [node name="messageTimer" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 2.0
 one_shot = true
 
 [node name="scoreLabel" type="Label" parent="."]

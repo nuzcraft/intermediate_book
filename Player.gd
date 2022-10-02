@@ -1,5 +1,8 @@
 extends KinematicBody
 export(PackedScene) var grenade
+export(AudioStream) var sound_grenade_launch: AudioStream
+export(AudioStream) var sound_gun: AudioStream
+export(AudioStream) var sound_ammo_collect: AudioStream
 
 #next change scene and update score
 var moveSpeed:float = 5
@@ -70,6 +73,7 @@ func _physics_process(delta):#called 60 times per sec
 			can_shoot = false
 			reload_timer.wait_time = inventory.get_curr_reload_time()
 			reload_timer.start()
+			sound_fx.stream = sound_gun
 			sound_fx.play()
 			if ray.is_colliding():
 				var obj = ray.get_collider()
@@ -88,6 +92,8 @@ func _physics_process(delta):#called 60 times per sec
 			new_grenade.global_transform.origin += get_global_transform().origin
 			new_grenade.global_transform.origin += transform.basis.xform(Vector3(0, 2, 1))
 			new_grenade.linear_velocity  = transform.basis.xform(Vector3.FORWARD)* -20
+			sound_fx.stream = sound_grenade_launch
+			sound_fx.play()
 	
 	var forward = global_transform.basis.z;
 	var right = global_transform.basis.x;
@@ -121,14 +127,26 @@ func _physics_process(delta):#called 60 times per sec
 			inventory.weapons[Weapon.TYPE_GUN].increase_ammo(10)
 			collision.collider.queue_free()
 			update_UI()
+			sound_fx.stream = sound_ammo_collect
+			sound_fx.play()
+			user_message.set_text("COLLECTED GUN AMMO")
+			message_timer.start()
 		elif collision.collider.is_in_group("auto_ammo_gun"):
 			inventory.weapons[Weapon.TYPE_AUTO_GUN].increase_ammo(10)
 			collision.collider.queue_free()
 			update_UI()
+			sound_fx.stream = sound_ammo_collect
+			sound_fx.play()
+			user_message.set_text("COLLECTED AUTOGUN AMMO")
+			message_timer.start()
 		elif collision.collider.is_in_group("ammo_grenade"):
 			inventory.weapons[Weapon.TYPE_GRENADE].increase_ammo(10)
 			collision.collider.queue_free()
 			update_UI()
+			sound_fx.stream = sound_ammo_collect
+			sound_fx.play()
+			user_message.set_text("COLLECTED GRENADES")
+			message_timer.start()
 			
 	if Input.is_action_just_pressed("change weapon"):
 		inventory.change_weapon()
@@ -159,6 +177,7 @@ func _input(event):
 
 func _on_messageTimer_timeout():
 	user_message.set_text("")
+	update_UI()
 	
 func reload_timer_timeout():
 	can_shoot = true
