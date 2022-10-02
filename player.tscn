@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://audio/beep.wav" type="AudioStream" id=2]
+[ext_resource path="res://gunshot.wav" type="AudioStream" id=3]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.5
@@ -21,3 +22,6 @@ transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 1.5,
 stream = ExtResource( 2 )
 
 [node name="bgSOund" type="AudioStreamPlayer" parent="."]
+
+[node name="sound_fx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )

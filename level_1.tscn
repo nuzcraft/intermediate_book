@@ -11,14 +11,6 @@
 albedo_texture = ExtResource( 2 )
 uv1_scale = Vector3( 10, 10, 10 )
 
-[sub_resource type="DynamicFont" id=8]
-size = 100
-font_data = ExtResource( 3 )
-
-[sub_resource type="DynamicFont" id=9]
-size = 100
-font_data = ExtResource( 3 )
-
 [sub_resource type="SphereShape" id=3]
 
 [sub_resource type="SpatialMaterial" id=4]
@@ -31,6 +23,14 @@ albedo_color = Color( 0.219608, 0.682353, 0.152941, 1 )
 
 [sub_resource type="SpatialMaterial" id=7]
 albedo_color = Color( 0.828125, 0.158508, 0.158508, 1 )
+
+[sub_resource type="DynamicFont" id=8]
+size = 100
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=9]
+size = 100
+font_data = ExtResource( 3 )
 
 [node name="Spatial" type="Spatial"]
 
@@ -45,26 +45,6 @@ material = SubResource( 2 )
 
 [node name="player" parent="." instance=ExtResource( 1 )]
 transform = Transform( -0.477603, 0, 0.878576, 0, 1, 0, -0.878576, 0, -0.477603, 0, 2.07205, 0 )
-
-[node name="message" type="Label" parent="player"]
-margin_right = 500.0
-margin_bottom = 100.0
-custom_fonts/font = SubResource( 8 )
-text = "Congratulations :)"
-align = 1
-valign = 1
-
-[node name="messageTimer" type="Timer" parent="player"]
-wait_time = 5.0
-one_shot = true
-
-[node name="score" type="Label" parent="player"]
-margin_left = 981.0
-margin_right = 1021.0
-margin_bottom = 120.0
-grow_horizontal = 0
-custom_fonts/font = SubResource( 9 )
-align = 2
 
 [node name="launcher" parent="." instance=ExtResource( 4 )]
 
@@ -132,4 +112,24 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.65569, 7, 22.255 )
 [node name="launcher4" parent="." instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 31.3457, 7, 14.6454 )
 
-[connection signal="timeout" from="player/messageTimer" to="player" method="_on_messageTimer_timeout"]
+[node name="message" type="Label" parent="."]
+margin_right = 628.0
+margin_bottom = 120.0
+custom_fonts/font = SubResource( 8 )
+text = "Congratulations :)"
+align = 1
+valign = 1
+
+[node name="messageTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="scoreLabel" type="Label" parent="."]
+margin_left = 981.0
+margin_right = 1021.0
+margin_bottom = 120.0
+grow_horizontal = 0
+custom_fonts/font = SubResource( 9 )
+align = 2
+
+[connection signal="timeout" from="messageTimer" to="player" method="_on_messageTimer_timeout"]

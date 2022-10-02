@@ -1,0 +1,25 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://grenade.gd" type="Script" id=1]
+[ext_resource path="res://joepli_shaded.gdshader" type="Shader" id=2]
+[ext_resource path="res://grenade_explode.wav" type="AudioStream" id=3]
+
+[sub_resource type="CapsuleShape" id=1]
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = ExtResource( 2 )
+shader_param/albedo = Color( 1, 1, 1, 1 )
+shader_param/normal_offset = 0.03
+shader_param/time_influence = 3.0
+shader_param/y_div = 3.0
+
+[node name="grenade" type="RigidBody"]
+script = ExtResource( 1 )
+sound_grenade_explode = ExtResource( 3 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 0.2, 0, 0, 0, 0.3, 0, 0, 0, 0.2, 0, 0, 0 )
+shape = SubResource( 1 )
+
+[node name="CSGSphere" type="CSGSphere" parent="CollisionShape"]
+material = SubResource( 2 )
