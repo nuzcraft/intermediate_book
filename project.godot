@@ -27,7 +27,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Startup Project"
-run/main_scene="res://training_camp/training_camp.tscn"
+run/main_scene="res://level_2.tscn"
 config/icon="res://icon.png"
 
 [input]

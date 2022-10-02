@@ -1,0 +1,168 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://BebasNeue-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://texture_05.png" type="Texture" id=3]
+[ext_resource path="res://crossHair.png" type="Texture" id=4]
+[ext_resource path="res://training_camp/crosshair.gd" type="Script" id=5]
+[ext_resource path="res://soldier6.gltf" type="PackedScene" id=6]
+[ext_resource path="res://ManageNPC2.gd" type="Script" id=7]
+[ext_resource path="res://white.png" type="Texture" id=9]
+[ext_resource path="res://grenade.tscn" type="PackedScene" id=11]
+[ext_resource path="res://gunshot.wav" type="AudioStream" id=13]
+[ext_resource path="res://grenade_launch.wav" type="AudioStream" id=14]
+[ext_resource path="res://powerup.wav" type="AudioStream" id=15]
+
+[sub_resource type="BoxShape" id=1]
+
+[sub_resource type="SpatialMaterial" id=24]
+albedo_texture = ExtResource( 3 )
+uv1_scale = Vector3( 10, 10, 1 )
+
+[sub_resource type="DynamicFont" id=8]
+size = 100
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=9]
+size = 100
+font_data = ExtResource( 1 )
+
+[sub_resource type="Shader" id=22]
+code = "shader_type canvas_item;
+
+uniform float frequency = 30;
+uniform float depth = 0.001;
+
+void fragment() {
+	vec2 uv = SCREEN_UV;
+	uv.x += sin(uv.y * frequency + TIME) * depth;
+	uv.x = clamp(uv.x, 0.0, 1.0);
+	uv.y += cos(uv.x * frequency + TIME) * depth;
+	uv.y = clamp(uv.y, 0.0, 1.0);
+	vec3 c = textureLod(SCREEN_TEXTURE, uv, 0.0).rgb;
+
+	COLOR.rgb = c;
+}
+"
+
+[sub_resource type="ShaderMaterial" id=23]
+shader = SubResource( 22 )
+shader_param/frequency = 30.0
+shader_param/depth = 0.001
+
+[sub_resource type="CapsuleShape" id=25]
+radius = 0.7
+height = 0.3
+
+[node name="Spatial" type="Spatial"]
+
+[node name="ground" type="StaticBody" parent="."]
+transform = Transform( 100, 0, 0, 0, 1, 0, 0, 0, 100, 0, 0, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="ground"]
+shape = SubResource( 1 )
+
+[node name="CSGBox" type="CSGBox" parent="ground/CollisionShape"]
+material = SubResource( 24 )
+
+[node name="player" parent="." instance=ExtResource( 2 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 2.07205, 13 )
+grenade = ExtResource( 11 )
+sound_grenade_launch = ExtResource( 14 )
+sound_gun = ExtResource( 13 )
+sound_ammo_collect = ExtResource( 15 )
+
+[node name="message" type="Label" parent="."]
+margin_left = 31.0
+margin_top = 480.0
+margin_right = 993.0
+margin_bottom = 600.0
+custom_fonts/font = SubResource( 8 )
+align = 1
+valign = 1
+
+[node name="messageTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="scoreLabel" type="Label" parent="."]
+visible = false
+margin_left = 981.0
+margin_right = 1021.0
+margin_bottom = 120.0
+grow_horizontal = 0
+custom_fonts/font = SubResource( 9 )
+align = 2
+
+[node name="crosshair" type="TextureRect" parent="."]
+margin_left = 356.0
+margin_top = 144.0
+margin_right = 668.0
+margin_bottom = 456.0
+texture = ExtResource( 4 )
+script = ExtResource( 5 )
+
+[node name="screenShader" type="TextureRect" parent="."]
+visible = false
+material = SubResource( 23 )
+margin_right = 1024.0
+margin_bottom = 600.0
+texture = ExtResource( 9 )
+expand = true
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( -0.881338, 0.472132, -0.0182957, 0.316473, 0.618634, 0.719122, 0.350839, 0.628, -0.694643, -0.419147, 38.736, -47.7765 )
+shadow_enabled = true
+
+[node name="KinematicBody" type="KinematicBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+script = ExtResource( 7 )
+
+[node name="NPC" parent="KinematicBody" instance=ExtResource( 6 )]
+
+[node name="BoneAttachment" parent="KinematicBody/NPC/IDLE/Skeleton" index="0"]
+transform = Transform( 0.997248, 0.0216141, 0.0709187, -0.0716195, 0.0336027, 0.996866, 0.0191632, -0.999202, 0.0350581, 0.611168, -0.815794, -155.955 )
+
+[node name="BoneAttachment2" parent="KinematicBody/NPC/IDLE/Skeleton" index="1"]
+transform = Transform( 0.224269, 0.707908, -0.669753, 0.495993, 0.508672, 0.703735, 0.838864, -0.49002, -0.237038, 22.7098, 19.1441, -80.8987 )
+
+[node name="BoneAttachment3" parent="KinematicBody/NPC/IDLE/Skeleton" index="2"]
+transform = Transform( -0.291658, -0.797795, -0.527691, -0.780913, -0.119981, 0.613009, -0.552369, 0.59087, -0.588015, 26.0554, 16.7232, -79.8706 )
+
+[node name="BoneAttachment4" parent="KinematicBody/NPC/IDLE/Skeleton" index="3"]
+transform = Transform( -0.666892, -0.387376, -0.636549, -0.744327, 0.386551, 0.544569, 0.0351063, 0.836969, -0.546122, 24.5273, 19.5482, -78.0252 )
+
+[node name="BoneAttachment5" parent="KinematicBody/NPC/IDLE/Skeleton" index="4"]
+transform = Transform( -0.313645, -0.810975, -0.493909, -0.696724, -0.156852, 0.699981, -0.645137, 0.563664, -0.51583, 27.8692, 15.541, -79.6126 )
+
+[node name="BoneAttachment6" parent="KinematicBody/NPC/IDLE/Skeleton" index="5"]
+transform = Transform( -0.330865, -0.843376, -0.423374, -0.659353, -0.114358, 0.743086, -0.675117, 0.525014, -0.518245, 30.3296, 14.4494, -80.1143 )
+
+[node name="BoneAttachment7" parent="KinematicBody/NPC/IDLE/Skeleton" index="6"]
+transform = Transform( 0.30652, -0.573647, 0.759588, -0.197663, 0.742245, 0.640314, -0.931114, -0.346412, 0.114124, -22.0445, 2.98792, -75.3941 )
+
+[node name="BoneAttachment8" parent="KinematicBody/NPC/IDLE/Skeleton" index="7"]
+transform = Transform( -0.886369, 0.0959456, 0.452928, 0.462541, 0.140976, 0.875318, 0.0201311, 0.985353, -0.169335, -22.3244, 1.59077, -71.8209 )
+
+[node name="BoneAttachment9" parent="KinematicBody/NPC/IDLE/Skeleton" index="8"]
+transform = Transform( -0.851983, 0.340429, 0.397783, 0.430392, 0.0227501, 0.902356, 0.298139, 0.939995, -0.165901, -22.7321, -0.480541, -72.5541 )
+
+[node name="BoneAttachment10" parent="KinematicBody/NPC/IDLE/Skeleton" index="9"]
+transform = Transform( -0.757333, 0.495741, 0.425072, 0.526258, 0.077911, 0.846748, 0.386651, 0.864968, -0.319892, -24.8166, -2.44463, -72.8649 )
+
+[node name="BoneAttachment11" parent="KinematicBody/NPC/IDLE/Skeleton" index="10"]
+transform = Transform( -0.709893, 0.589207, 0.385858, 0.560321, 0.140537, 0.816266, 0.426722, 0.795666, -0.429911, -27.2631, -3.76595, -74.2025 )
+
+[node name="BoneAttachment12" parent="KinematicBody/NPC/IDLE/Skeleton" index="11"]
+transform = Transform( 0.988126, 0.0729551, 0.135216, -0.152668, 0.565175, 0.810722, -0.0172747, -0.821739, 0.569603, 10.599, -10.7678, -9.1561 )
+
+[node name="BoneAttachment13" parent="KinematicBody/NPC/IDLE/Skeleton" index="12"]
+transform = Transform( 0.999129, -0.0107874, 0.0403224, -0.0410948, -0.0849854, 0.995534, -0.0073122, -0.996324, -0.0853546, -5.92617, 7.65784, -0.017067 )
+
+[node name="CollisionShape" type="CollisionShape" parent="KinematicBody"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1, 0 )
+shape = SubResource( 25 )
+
+[connection signal="timeout" from="messageTimer" to="player" method="_on_messageTimer_timeout"]
+
+[editable path="KinematicBody/NPC"]
