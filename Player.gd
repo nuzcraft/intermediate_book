@@ -1,4 +1,5 @@
 extends KinematicBody
+export(PackedScene) var grenade
 
 #next change scene and update score
 var moveSpeed:float = 5
@@ -62,6 +63,7 @@ func _physics_process(delta):#called 60 times per sec
 		var condition2 = inventory.weapon_index == Weapon.TYPE_AUTO_GUN
 		var condition3 = inventory.has_ammo_for_current()
 		var condition4 = can_shoot
+		var condition5 = inventory.weapon_index == Weapon.TYPE_GRENADE
 		if (condition1 or condition2) and condition3 and condition4:
 			inventory.decrease_curr_ammo()
 			update_UI()
@@ -73,6 +75,19 @@ func _physics_process(delta):#called 60 times per sec
 				var obj = ray.get_collider()
 				if obj.is_in_group("target"):
 					obj.got_hit()
+		elif condition5 and condition3 and condition4:
+			inventory.decrease_curr_ammo()
+			update_UI()
+			var new_grenade = grenade.instance()
+			can_shoot = false
+			reload_timer.wait_time = inventory.get_curr_reload_time()
+			reload_timer.start()
+			get_node("../../Spatial").add_child(new_grenade)
+			var zPos = global_transform.basis.z
+			var xPos = global_transform.basis.x
+			new_grenade.global_transform.origin += get_global_transform().origin
+			new_grenade.global_transform.origin += transform.basis.xform(Vector3(0, 2, 1))
+			new_grenade.linear_velocity  = transform.basis.xform(Vector3.FORWARD)* -20
 	
 	var forward = global_transform.basis.z;
 	var right = global_transform.basis.x;
