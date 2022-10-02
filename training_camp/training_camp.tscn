@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://BebasNeue-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://player.tscn" type="PackedScene" id=2]
@@ -7,49 +7,16 @@
 [ext_resource path="res://training_camp/crosshair.gd" type="Script" id=5]
 [ext_resource path="res://training_camp/ManageNPC.gd" type="Script" id=6]
 [ext_resource path="res://box_texture.jpg" type="Texture" id=7]
-[ext_resource path="res://joepli.gdshader" type="Shader" id=8]
+[ext_resource path="res://white.png" type="Texture" id=9]
 
 [sub_resource type="BoxShape" id=1]
 
-[sub_resource type="Shader" id=20]
-code = "shader_type spatial;
-render_mode depth_draw_opaque, unshaded, world_vertex_coords;
+[sub_resource type="SpatialMaterial" id=24]
+albedo_texture = ExtResource( 3 )
+uv1_scale = Vector3( 10, 10, 1 )
 
-uniform vec4 albedo : hint_color = vec4(1.0, 1.0, 1.0, 1.0);
-uniform sampler2D texture_albedo : hint_albedo;
-
-uniform float normal_offset : hint_range(0, 1, 0.01) = 0.03;
-uniform float time_influence : hint_range(0, 50) = 3;
-uniform float y_div : hint_range(0, 10, .1) = 3.0;
-
-void vertex() {
-    VERTEX.x += sin(VERTEX.y * y_div + round(TIME * time_influence)) * normal_offset;
-    VERTEX.y += sin(VERTEX.x * y_div + round(TIME * time_influence)) * normal_offset;
-    VERTEX.z += sin(VERTEX.y * y_div + round(TIME * time_influence)) * normal_offset;
-}
-
-void fragment() {
-	vec2 base_uv = UV * vec2(20,20);
-	vec4 albedo_tex = texture(texture_albedo, base_uv);
-	albedo_tex *= COLOR;
-	ALBEDO = albedo.rgb * albedo_tex.rgb;
-}"
-
-[sub_resource type="ShaderMaterial" id=21]
-shader = SubResource( 20 )
-shader_param/albedo = Color( 1, 1, 1, 1 )
-shader_param/normal_offset = 0.03
-shader_param/time_influence = 3.0
-shader_param/y_div = 3.0
-shader_param/texture_albedo = ExtResource( 3 )
-
-[sub_resource type="ShaderMaterial" id=15]
-shader = ExtResource( 8 )
-shader_param/albedo = Color( 1, 1, 1, 1 )
-shader_param/normal_offset = 0.03
-shader_param/time_influence = 3.0
-shader_param/y_div = 3.0
-shader_param/texture_albedo = ExtResource( 7 )
+[sub_resource type="SpatialMaterial" id=25]
+albedo_texture = ExtResource( 7 )
 
 [sub_resource type="DynamicFont" id=8]
 size = 100
@@ -61,33 +28,40 @@ font_data = ExtResource( 1 )
 
 [sub_resource type="BoxShape" id=10]
 
-[sub_resource type="ShaderMaterial" id=14]
-shader = ExtResource( 8 )
-shader_param/albedo = Color( 0.905882, 0.4, 0.4, 1 )
-shader_param/normal_offset = 0.05
-shader_param/time_influence = 3.0
-shader_param/y_div = 3.0
+[sub_resource type="SpatialMaterial" id=26]
+albedo_color = Color( 0.905882, 0.4, 0.4, 1 )
 
-[sub_resource type="ShaderMaterial" id=17]
-shader = ExtResource( 8 )
-shader_param/albedo = Color( 0.905882, 0.4, 0.4, 1 )
-shader_param/normal_offset = 0.03
-shader_param/time_influence = 3.0
-shader_param/y_div = 3.0
+[sub_resource type="SpatialMaterial" id=27]
+albedo_color = Color( 0.905882, 0.4, 0.4, 1 )
 
-[sub_resource type="ShaderMaterial" id=18]
-shader = ExtResource( 8 )
-shader_param/albedo = Color( 0.905882, 0.4, 0.4, 1 )
-shader_param/normal_offset = 0.03
-shader_param/time_influence = 3.0
-shader_param/y_div = 3.0
+[sub_resource type="SpatialMaterial" id=28]
+albedo_color = Color( 0.905882, 0.4, 0.4, 1 )
 
-[sub_resource type="ShaderMaterial" id=19]
-shader = ExtResource( 8 )
-shader_param/albedo = Color( 0.905882, 0.4, 0.4, 1 )
-shader_param/normal_offset = 0.03
-shader_param/time_influence = 3.0
-shader_param/y_div = 3.0
+[sub_resource type="SpatialMaterial" id=29]
+albedo_color = Color( 0.905882, 0.4, 0.4, 1 )
+
+[sub_resource type="Shader" id=22]
+code = "shader_type canvas_item;
+
+uniform float frequency = 30;
+uniform float depth = 0.001;
+
+void fragment() {
+	vec2 uv = SCREEN_UV;
+	uv.x += sin(uv.y * frequency + TIME) * depth;
+	uv.x = clamp(uv.x, 0.0, 1.0);
+	uv.y += cos(uv.x * frequency + TIME) * depth;
+	uv.y = clamp(uv.y, 0.0, 1.0);
+	vec3 c = textureLod(SCREEN_TEXTURE, uv, 0.0).rgb;
+
+	COLOR.rgb = c;
+}
+"
+
+[sub_resource type="ShaderMaterial" id=23]
+shader = SubResource( 22 )
+shader_param/frequency = 30.0
+shader_param/depth = 0.001
 
 [node name="Spatial" type="Spatial"]
 
@@ -98,7 +72,7 @@ transform = Transform( 100, 0, 0, 0, 1, 0, 0, 0, 100, 0, 0, 0 )
 shape = SubResource( 1 )
 
 [node name="CSGBox" type="CSGBox" parent="ground/CollisionShape"]
-material = SubResource( 21 )
+material = SubResource( 24 )
 
 [node name="ammo" type="StaticBody" parent="." groups=["ammo_gun"]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 2, 4 )
@@ -107,7 +81,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 2, 4 )
 shape = SubResource( 1 )
 
 [node name="CSGBox" type="CSGBox" parent="ammo/CollisionShape"]
-material = SubResource( 15 )
+material = SubResource( 25 )
 
 [node name="player" parent="." instance=ExtResource( 2 )]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 2.07205, 13 )
@@ -142,7 +116,7 @@ shape = SubResource( 10 )
 
 [node name="CSGBox" type="CSGBox" parent="target1/CollisionShape"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0296135, -5.96046e-08, 0.023015 )
-material = SubResource( 14 )
+material = SubResource( 26 )
 
 [node name="target2" type="StaticBody" parent="." groups=["target"]]
 transform = Transform( 1, 0, 0, 0, 5, 0, 0, 0, 1, 6, 5, 0 )
@@ -152,7 +126,7 @@ script = ExtResource( 6 )
 shape = SubResource( 10 )
 
 [node name="CSGBox" type="CSGBox" parent="target2/CollisionShape"]
-material = SubResource( 17 )
+material = SubResource( 27 )
 
 [node name="target3" type="StaticBody" parent="." groups=["target"]]
 transform = Transform( 1, 0, 0, 0, 5, 0, 0, 0, 1, 12, 5, 0 )
@@ -162,7 +136,7 @@ script = ExtResource( 6 )
 shape = SubResource( 10 )
 
 [node name="CSGBox" type="CSGBox" parent="target3/CollisionShape"]
-material = SubResource( 18 )
+material = SubResource( 28 )
 
 [node name="target4" type="StaticBody" parent="." groups=["target"]]
 transform = Transform( 1, 0, 0, 0, 5, 0, 0, 0, 1, 18, 5, 0 )
@@ -172,7 +146,7 @@ script = ExtResource( 6 )
 shape = SubResource( 10 )
 
 [node name="CSGBox" type="CSGBox" parent="target4/CollisionShape"]
-material = SubResource( 19 )
+material = SubResource( 29 )
 
 [node name="crosshair" type="TextureRect" parent="."]
 margin_left = 356.0
@@ -181,5 +155,13 @@ margin_right = 668.0
 margin_bottom = 456.0
 texture = ExtResource( 4 )
 script = ExtResource( 5 )
+
+[node name="screenShader" type="TextureRect" parent="."]
+visible = false
+material = SubResource( 23 )
+margin_right = 1024.0
+margin_bottom = 600.0
+texture = ExtResource( 9 )
+expand = true
 
 [connection signal="timeout" from="messageTimer" to="player" method="_on_messageTimer_timeout"]
