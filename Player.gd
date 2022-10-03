@@ -23,6 +23,7 @@ var gun_ammo = 10
 
 onready var camera :Camera = get_node("Camera")#only when node is initialized
 onready var user_message:Label = get_node("../message")
+onready var player_info:Label = get_node("../player_info")
 onready var message_timer:Timer = get_node("../messageTimer")
 onready var score_label:Label = get_node("../scoreLabel")
 onready var sound_fx := $sound_fx
@@ -31,6 +32,10 @@ var ray:RayCast
 var inventory: WeaponInventory
 var reload_timer: Timer
 var can_shoot = true
+var health = 100
+
+var nb_lives = 3
+var initial_position
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -45,6 +50,8 @@ func _ready():
 	reload_timer.connect("timeout", self, "reload_timer_timeout")
 	inventory = WeaponInventory.new()
 	update_UI()
+	initial_position = global_transform.origin
+	update_player_info()
 	
 	
 func _physics_process(delta):#called 60 times per sec
@@ -147,6 +154,14 @@ func _physics_process(delta):#called 60 times per sec
 			sound_fx.play()
 			user_message.set_text("COLLECTED GRENADES")
 			message_timer.start()
+		elif collision.collider.is_in_group("health_pack"):
+			health = 100
+			collision.collider.queue_free()
+			update_UI()
+			sound_fx.stream = sound_ammo_collect
+			sound_fx.play()
+			user_message.set_text("HEALED")
+			message_timer.start()
 			
 	if Input.is_action_just_pressed("change weapon"):
 		inventory.change_weapon()
@@ -187,3 +202,22 @@ func update_UI():
 	var message = inventory.get_curr_weapon_name()
 	message += "(" + str(inventory.get_curr_weapon_ammo()) + ")"
 	user_message.set_text(message)
+	
+func got_hit():
+	health -= 10
+#	print("Player's Health: " + str(health))
+	update_player_info()
+	if health < 0:
+		restart_level()
+	
+		
+func restart_level():
+	nb_lives -= 1
+	health = 100
+	global_transform.origin = initial_position
+	update_player_info()
+	
+func update_player_info():
+	var message = "Lives: " + str(nb_lives)
+	message += "\nHealth: " + str(health)
+	player_info.set_text(message)

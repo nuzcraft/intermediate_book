@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://BebasNeue-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://player.tscn" type="PackedScene" id=2]
@@ -7,7 +7,9 @@
 [ext_resource path="res://training_camp/crosshair.gd" type="Script" id=5]
 [ext_resource path="res://soldier6.gltf" type="PackedScene" id=6]
 [ext_resource path="res://ManageNPC2.gd" type="Script" id=7]
+[ext_resource path="res://Handgun_Game_Blender Gamer Engine.fbx" type="PackedScene" id=8]
 [ext_resource path="res://white.png" type="Texture" id=9]
+[ext_resource path="res://health_pack.tscn" type="PackedScene" id=10]
 [ext_resource path="res://grenade.tscn" type="PackedScene" id=11]
 [ext_resource path="res://gunshot.wav" type="AudioStream" id=13]
 [ext_resource path="res://grenade_launch.wav" type="AudioStream" id=14]
@@ -20,7 +22,7 @@ albedo_texture = ExtResource( 3 )
 uv1_scale = Vector3( 10, 10, 1 )
 
 [sub_resource type="DynamicFont" id=8]
-size = 100
+size = 50
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=9]
@@ -81,6 +83,13 @@ custom_fonts/font = SubResource( 8 )
 align = 1
 valign = 1
 
+[node name="player_info" type="Label" parent="."]
+margin_left = 31.0
+margin_right = 993.0
+margin_bottom = 120.0
+custom_fonts/font = SubResource( 8 )
+valign = 1
+
 [node name="messageTimer" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
@@ -114,54 +123,75 @@ expand = true
 transform = Transform( -0.881338, 0.472132, -0.0182957, 0.316473, 0.618634, 0.719122, 0.350839, 0.628, -0.694643, -0.419147, 38.736, -47.7765 )
 shadow_enabled = true
 
-[node name="KinematicBody" type="KinematicBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+[node name="KinematicBody" type="KinematicBody" parent="." groups=["target"]]
+transform = Transform( 0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, 0.5, 0, 1, 0 )
 script = ExtResource( 7 )
 
 [node name="NPC" parent="KinematicBody" instance=ExtResource( 6 )]
 
+[node name="Skeleton" parent="KinematicBody/NPC/IDLE" index="0"]
+bones/6/bound_children = [ NodePath("BoneAttachment") ]
+bones/16/bound_children = [ NodePath("BoneAttachment2") ]
+bones/19/bound_children = [ NodePath("BoneAttachment3") ]
+bones/22/bound_children = [ NodePath("BoneAttachment4") ]
+bones/25/bound_children = [ NodePath("BoneAttachment5") ]
+bones/28/bound_children = [ NodePath("BoneAttachment6") ]
+bones/35/bound_children = [ NodePath("BoneAttachment7") ]
+bones/38/bound_children = [ NodePath("BoneAttachment8") ]
+bones/41/bound_children = [ NodePath("BoneAttachment9") ]
+bones/44/bound_children = [ NodePath("BoneAttachment10") ]
+bones/47/bound_children = [ NodePath("BoneAttachment11") ]
+bones/51/bound_children = [ NodePath("BoneAttachment12") ]
+bones/55/bound_children = [ NodePath("BoneAttachment13") ]
+
 [node name="BoneAttachment" parent="KinematicBody/NPC/IDLE/Skeleton" index="0"]
-transform = Transform( 0.997248, 0.0216141, 0.0709187, -0.0716195, 0.0336027, 0.996866, 0.0191632, -0.999202, 0.0350581, 0.611168, -0.815794, -155.955 )
+transform = Transform( 0.974466, -0.0942175, -0.203811, 0.223912, 0.340229, 0.913295, -0.0167061, -0.935611, 0.352638, -4.176, 10.8334, -145.252 )
 
 [node name="BoneAttachment2" parent="KinematicBody/NPC/IDLE/Skeleton" index="1"]
-transform = Transform( 0.224269, 0.707908, -0.669753, 0.495993, 0.508672, 0.703735, 0.838864, -0.49002, -0.237038, 22.7098, 19.1441, -80.8987 )
+transform = Transform( 0.0872059, 0.972626, 0.215394, 0.970816, -0.0344862, -0.23733, -0.223406, 0.229805, -0.947248, -18.391, 69.7202, -136.596 )
 
 [node name="BoneAttachment3" parent="KinematicBody/NPC/IDLE/Skeleton" index="2"]
-transform = Transform( -0.291658, -0.797795, -0.527691, -0.780913, -0.119981, 0.613009, -0.552369, 0.59087, -0.588015, 26.0554, 16.7232, -79.8706 )
+transform = Transform( -0.939546, 0.212055, 0.26886, 0.255859, 0.956575, 0.139643, -0.227573, 0.199991, -0.953003, -22.0706, 77.2693, -128.068 )
 
 [node name="BoneAttachment4" parent="KinematicBody/NPC/IDLE/Skeleton" index="3"]
-transform = Transform( -0.666892, -0.387376, -0.636549, -0.744327, 0.386551, 0.544569, 0.0351063, 0.836969, -0.546122, 24.5273, 19.5482, -78.0252 )
+transform = Transform( -0.91128, 0.399891, 0.0982664, 0.410609, 0.900464, 0.143405, -0.0311394, 0.171031, -0.984774, -20.923, 77.6731, -129.427 )
 
 [node name="BoneAttachment5" parent="KinematicBody/NPC/IDLE/Skeleton" index="4"]
-transform = Transform( -0.313645, -0.810975, -0.493909, -0.696724, -0.156852, 0.699981, -0.645137, 0.563664, -0.51583, 27.8692, 15.541, -79.6126 )
+transform = Transform( -0.889715, 0.185978, 0.416916, 0.265435, 0.953763, 0.140995, -0.371417, 0.236109, -0.897943, -22.2688, 76.7693, -126.709 )
 
 [node name="BoneAttachment6" parent="KinematicBody/NPC/IDLE/Skeleton" index="5"]
-transform = Transform( -0.330865, -0.843376, -0.423374, -0.659353, -0.114358, 0.743086, -0.675117, 0.525014, -0.518245, 30.3296, 14.4494, -80.1143 )
+transform = Transform( -0.903326, 0.136706, 0.406588, 0.129464, 0.990543, -0.0454174, -0.408952, 0.0116117, -0.912482, -21.1411, 74.2337, -124.717 )
 
 [node name="BoneAttachment7" parent="KinematicBody/NPC/IDLE/Skeleton" index="6"]
-transform = Transform( 0.30652, -0.573647, 0.759588, -0.197663, 0.742245, 0.640314, -0.931114, -0.346412, 0.114124, -22.0445, 2.98792, -75.3941 )
+transform = Transform( 0.53794, -0.617745, 0.573594, -0.794905, -0.598232, 0.101215, 0.280617, -0.510401, -0.812862, -15.2927, 72.7764, -135.592 )
 
 [node name="BoneAttachment8" parent="KinematicBody/NPC/IDLE/Skeleton" index="7"]
-transform = Transform( -0.886369, 0.0959456, 0.452928, 0.462541, 0.140976, 0.875318, 0.0201311, 0.985353, -0.169335, -22.3244, 1.59077, -71.8209 )
+transform = Transform( -0.22289, -0.958379, 0.178408, -0.970536, 0.200971, -0.132935, 0.0915479, -0.202781, -0.974935, -20.7654, 79.3206, -134.033 )
 
 [node name="BoneAttachment9" parent="KinematicBody/NPC/IDLE/Skeleton" index="8"]
-transform = Transform( -0.851983, 0.340429, 0.397783, 0.430392, 0.0227501, 0.902356, 0.298139, 0.939995, -0.165901, -22.7321, -0.480541, -72.5541 )
+transform = Transform( -0.959604, 0.281119, 0.0114682, 0.273859, 0.942615, -0.190995, -0.0645024, -0.180139, -0.981524, -16.794, 75.4219, -131.02 )
+
+[node name="gun" parent="KinematicBody/NPC/IDLE/Skeleton/BoneAttachment9/swatRightHandMiddle4" index="0" instance=ExtResource( 8 )]
+transform = Transform( 4.15818, 1.99174, 8.8737, -3.63861, 9.30662, -0.383878, -8.33487, -3.06917, 4.59458, 5.47, 0.062, -0.847 )
 
 [node name="BoneAttachment10" parent="KinematicBody/NPC/IDLE/Skeleton" index="9"]
-transform = Transform( -0.757333, 0.495741, 0.425072, 0.526258, 0.077911, 0.846748, 0.386651, 0.864968, -0.319892, -24.8166, -2.44463, -72.8649 )
+transform = Transform( -0.973904, 0.180285, -0.137869, 0.210834, 0.943541, -0.2555, 0.0840215, -0.2779, -0.956928, -16.8325, 75.0083, -129.363 )
 
 [node name="BoneAttachment11" parent="KinematicBody/NPC/IDLE/Skeleton" index="10"]
-transform = Transform( -0.709893, 0.589207, 0.385858, 0.560321, 0.140537, 0.816266, 0.426722, 0.795666, -0.429911, -27.2631, -3.76595, -74.2025 )
+transform = Transform( -0.911877, -0.408852, 0.0363198, -0.400455, 0.866736, -0.297329, 0.0900841, -0.285673, -0.954084, -17.513, 74.7347, -126.587 )
 
 [node name="BoneAttachment12" parent="KinematicBody/NPC/IDLE/Skeleton" index="11"]
-transform = Transform( 0.988126, 0.0729551, 0.135216, -0.152668, 0.565175, 0.810722, -0.0172747, -0.821739, 0.569603, 10.599, -10.7678, -9.1561 )
+transform = Transform( 0.982747, -0.00106257, 0.184955, -0.184954, 0.000260582, 0.982747, -0.00109243, -0.999999, 5.95e-05, 20.8252, 39.8097, -0.185238 )
 
 [node name="BoneAttachment13" parent="KinematicBody/NPC/IDLE/Skeleton" index="12"]
-transform = Transform( 0.999129, -0.0107874, 0.0403224, -0.0410948, -0.0849854, 0.995534, -0.0073122, -0.996324, -0.0853546, -5.92617, 7.65784, -0.017067 )
+transform = Transform( 0.849408, -0.00377344, -0.527722, 0.527716, -0.00259506, 0.849417, -0.00457472, -0.999989, -0.000213061, -22.9498, -14.6508, -0.186437 )
 
 [node name="CollisionShape" type="CollisionShape" parent="KinematicBody"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1, 0 )
 shape = SubResource( 25 )
+
+[node name="health_pack" parent="." instance=ExtResource( 10 )]
+transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 1.865, 1.2, 3.977 )
 
 [connection signal="timeout" from="messageTimer" to="player" method="_on_messageTimer_timeout"]
 
