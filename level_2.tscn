@@ -145,46 +145,46 @@ bones/51/bound_children = [ NodePath("BoneAttachment12") ]
 bones/55/bound_children = [ NodePath("BoneAttachment13") ]
 
 [node name="BoneAttachment" parent="KinematicBody/NPC/IDLE/Skeleton" index="0"]
-transform = Transform( 0.974466, -0.0942175, -0.203811, 0.223912, 0.340229, 0.913295, -0.0167061, -0.935611, 0.352638, -4.176, 10.8334, -145.252 )
+transform = Transform( 0.936547, -0.113272, -0.331737, 0.35002, 0.353811, 0.867355, 0.019125, -0.928433, 0.371008, -2.97229, 8.52055, -150.007 )
 
 [node name="BoneAttachment2" parent="KinematicBody/NPC/IDLE/Skeleton" index="1"]
-transform = Transform( 0.0872059, 0.972626, 0.215394, 0.970816, -0.0344862, -0.23733, -0.223406, 0.229805, -0.947248, -18.391, 69.7202, -136.596 )
+transform = Transform( 0.275013, 0.499208, -0.82168, 0.681438, 0.501686, 0.532872, 0.67824, -0.706471, -0.20221, 22.0742, 28.1516, -80.9504 )
 
 [node name="BoneAttachment3" parent="KinematicBody/NPC/IDLE/Skeleton" index="2"]
-transform = Transform( -0.939546, 0.212055, 0.26886, 0.255859, 0.956575, 0.139643, -0.227573, 0.199991, -0.953003, -22.0706, 77.2693, -128.068 )
+transform = Transform( -0.0615266, 0.679794, -0.730817, 0.324498, 0.706051, 0.629438, 0.943883, -0.198421, -0.264033, 31.4176, 32.7207, -75.3435 )
 
 [node name="BoneAttachment4" parent="KinematicBody/NPC/IDLE/Skeleton" index="3"]
-transform = Transform( -0.91128, 0.399891, 0.0982664, 0.410609, 0.900464, 0.143405, -0.0311394, 0.171031, -0.984774, -20.923, 77.6731, -129.427 )
+transform = Transform( -0.0593677, 0.628221, -0.775766, 0.641883, 0.619196, 0.452307, 0.764501, -0.471099, -0.440005, 28.942, 36.0875, -78.2985 )
 
 [node name="BoneAttachment5" parent="KinematicBody/NPC/IDLE/Skeleton" index="4"]
-transform = Transform( -0.889715, 0.185978, 0.416916, 0.265435, 0.953763, 0.140995, -0.371417, 0.236109, -0.897943, -22.2688, 76.7693, -126.709 )
+transform = Transform( -0.338875, 0.633153, -0.695902, -0.0466401, 0.727453, 0.684571, 0.939674, 0.264441, -0.216986, 31.2529, 28.4421, -74.1583 )
 
 [node name="BoneAttachment6" parent="KinematicBody/NPC/IDLE/Skeleton" index="5"]
-transform = Transform( -0.903326, 0.136706, 0.406588, 0.129464, 0.990543, -0.0454174, -0.408952, 0.0116117, -0.912482, -21.1411, 74.2337, -124.717 )
+transform = Transform( -0.449323, 0.577262, -0.681819, -0.176321, 0.690885, 0.701134, 0.875797, 0.435255, -0.208648, 32.5317, 25.7568, -76.1356 )
 
 [node name="BoneAttachment7" parent="KinematicBody/NPC/IDLE/Skeleton" index="6"]
-transform = Transform( 0.53794, -0.617745, 0.573594, -0.794905, -0.598232, 0.101215, 0.280617, -0.510401, -0.812862, -15.2927, 72.7764, -135.592 )
+transform = Transform( 0.190694, -0.93956, -0.284363, 0.144638, -0.259624, 0.954817, -0.970936, -0.223207, 0.0863872, -31.1647, -13.4898, -80.7825 )
 
 [node name="BoneAttachment8" parent="KinematicBody/NPC/IDLE/Skeleton" index="7"]
-transform = Transform( -0.22289, -0.958379, 0.178408, -0.970536, 0.200971, -0.132935, 0.0915479, -0.202781, -0.974935, -20.7654, 79.3206, -134.033 )
+transform = Transform( -0.119793, -0.970625, -0.208653, -0.31198, -0.162717, 0.936051, -0.942506, 0.177228, -0.283324, -35.7832, -14.626, -72.8862 )
 
 [node name="BoneAttachment9" parent="KinematicBody/NPC/IDLE/Skeleton" index="8"]
-transform = Transform( -0.959604, 0.281119, 0.0114682, 0.273859, 0.942615, -0.190995, -0.0645024, -0.180139, -0.981524, -16.794, 75.4219, -131.02 )
+transform = Transform( -0.466896, -0.85693, -0.218355, -0.372022, -0.03367, 0.927613, -0.802251, 0.514332, -0.303076, -33.4647, -16.3198, -71.8899 )
 
 [node name="gun" parent="KinematicBody/NPC/IDLE/Skeleton/BoneAttachment9/swatRightHandMiddle4" index="0" instance=ExtResource( 8 )]
 transform = Transform( 4.15818, 1.99174, 8.8737, -3.63861, 9.30662, -0.383878, -8.33487, -3.06917, 4.59458, 5.47, 0.062, -0.847 )
 
 [node name="BoneAttachment10" parent="KinematicBody/NPC/IDLE/Skeleton" index="9"]
-transform = Transform( -0.973904, 0.180285, -0.137869, 0.210834, 0.943541, -0.2555, 0.0840215, -0.2779, -0.956928, -16.8325, 75.0083, -129.363 )
+transform = Transform( -0.691217, -0.69412, -0.201034, -0.316683, 0.0408967, 0.947649, -0.649561, 0.718696, -0.248085, -31.5256, -19.3345, -72.4935 )
 
 [node name="BoneAttachment11" parent="KinematicBody/NPC/IDLE/Skeleton" index="10"]
-transform = Transform( -0.911877, -0.408852, 0.0363198, -0.400455, 0.866736, -0.297329, 0.0900841, -0.285673, -0.954084, -17.513, 74.7347, -126.587 )
+transform = Transform( -0.754063, -0.619832, -0.217248, -0.334095, 0.0772028, 0.939372, -0.565481, 0.780928, -0.265299, -31.0086, -21.975, -74.6674 )
 
 [node name="BoneAttachment12" parent="KinematicBody/NPC/IDLE/Skeleton" index="11"]
-transform = Transform( 0.982747, -0.00106257, 0.184955, -0.184954, 0.000260582, 0.982747, -0.00109243, -0.999999, 5.95e-05, 20.8252, 39.8097, -0.185238 )
+transform = Transform( 0.673112, 0.0219204, -0.739215, 0.739396, -0.0397302, 0.672098, -0.0146367, -0.99897, -0.0429508, 2.96187, 31.9144, -0.0503349 )
 
 [node name="BoneAttachment13" parent="KinematicBody/NPC/IDLE/Skeleton" index="12"]
-transform = Transform( 0.849408, -0.00377344, -0.527722, 0.527716, -0.00259506, 0.849417, -0.00457472, -0.999989, -0.000213061, -22.9498, -14.6508, -0.186437 )
+transform = Transform( 0.307143, 0.0281079, -0.951248, 0.951649, -0.0145162, 0.306843, -0.00518378, -0.999499, -0.0312074, -12.6012, -25.8655, -0.00382614 )
 
 [node name="CollisionShape" type="CollisionShape" parent="KinematicBody"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1, 0 )
