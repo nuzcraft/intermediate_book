@@ -5,15 +5,22 @@ enum{
 	HIT,
 	IDLE,
 	DYING,
+	CHASE,
 	SHOOT,
 }
-var current_state = IDLE
+var current_state = CHASE
 
 var ray: RayCast
 var param_can_see_player = false
 
 var shoot_timer: Timer
 var can_inflict_damage = true
+
+var path = []
+var path_node = 0
+var speed = 7
+onready var nav = get_node("/root/Spatial/Navigation")
+onready var player = get_node("/root/Spatial/player")
 
 func _ready():
 	health = 100
@@ -42,6 +49,7 @@ func destroy_target():
 	queue_free()
 	
 func _process(delta):
+	var distance_to_player = (player.global_transform.origin - global_transform.origin)
 	match current_state:
 		IDLE:
 			print("I am in the state IDLE")
@@ -66,18 +74,37 @@ func _process(delta):
 				get_node("../player").got_hit()
 				shoot_timer.start()
 				can_inflict_damage = false
+		CHASE:
+			get_node("NPC/AnimationPlayer").play("Walking")
+			if (path_node < path.size()):
+				var direction = (path[path_node] - global_transform.origin)
+				if direction.length() < 1:
+					path_node += 1
+				else:
+					move_and_slide(direction.normalized()*speed, Vector3.UP)
+					look_at(global_transform.origin - direction, Vector3.UP)
+			if distance_to_player.length() < 1.5:
+				current_state = IDLE
+					
 			
 func _input(event):
 	if Input.is_key_pressed(KEY_P):
-		current_state = HIT
+#		current_state = HIT
+		calc_path()
 		
 func _physics_process(delta):
 	if ray.is_colliding():
-		var obj = ray.get_collider()
-		if (obj.name == "player"):
-			param_can_see_player = true
-		else:
-			param_can_see_player = false
-			
+		pass
+#		var obj = ray.get_collider()
+#		if (obj.name == "player"):
+#			param_can_see_player = true
+#		else:
+#			param_can_see_player = false
+
 func enable_shooting():
 	can_inflict_damage = true
+	
+func calc_path():
+	if (current_state == CHASE):
+		path = nav.get_simple_path(global_transform.origin, player.global_transform.origin, true)
+		path_node = 0
